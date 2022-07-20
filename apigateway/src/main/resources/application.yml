@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: api-gateway
+    spring:
+      zipkin:
+        base-url: http://localhost:9411
+  cloud:
+    gateway:
+      routes:
+        - id: alumno
+          uri: lb://ALUMNO
+          predicates:
+            - Path=/api/alumno/**
+        - id: alumno
+          uri: lb://CURSO
+          predicates:
+            - Path=/api/curso/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
