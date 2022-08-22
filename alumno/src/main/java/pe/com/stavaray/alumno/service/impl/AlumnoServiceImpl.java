@@ -1,19 +1,24 @@
 package pe.com.stavaray.alumno.service.impl;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.com.stavaray.alumno.dao.IAlumnoDao;
 import pe.com.stavaray.alumno.model.Alumno;
-import pe.com.stavaray.alumno.rabbitmq.RabbitMQMessageProducer;
+import pe.com.stavaray.alumnoqueues.rabbitmq.RabbitMQMessageProducer;
 import pe.com.stavaray.alumno.service.IAlumnoService;
 import pe.com.stavaray.alumnofeign.notificacion.NotificacionRequest;
 import pe.com.stavaray.alumnofeign.validar.curso.CursoClient;
 import pe.com.stavaray.alumnofeign.validar.curso.CursoResponse;
 
+
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AlumnoServiceImpl implements IAlumnoService {
@@ -39,11 +44,24 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public Alumno save(Alumno alumno) {
 
         Alumno alumnoResponse = alumnoDao.save(alumno);
-        CursoResponse  cursoResponse= cursoClient.validarAlumno(alumnoResponse.getId());
+        return alumnoResponse;
+    }
+    @CircuitBreaker(name = "validarAlumnoCB", fallbackMethod = "fallValidarAlumnoCB")
+    @Retry(name = "validarAlumnoRetry")
+    public String validarAlumno(Alumno alumno) {
+        log.info("Estoy en validar alumno");
+        CursoResponse cursoResponse = cursoClient.validarAlumno(alumno.getId());
 
         if(cursoResponse.inavilitado()){
             throw new IllegalStateException("El alumno esta inavilitado del curso");
         }
+        return "OK";
+    }
+    public String fallValidarAlumnoCB(Alumno alumno, Exception e){
+        return "NO_OK";
+    }
+
+    public void registrarNotificacion(Alumno alumno) {
         NotificacionRequest notificacionRequest = new NotificacionRequest(
                 alumno.getId(),
                 alumno.getEmail(),
@@ -54,8 +72,6 @@ public class AlumnoServiceImpl implements IAlumnoService {
         rabbitMQMessageProducer.publish(notificacionRequest
                 ,"internal.exchange"
                 ,"internal.notification.routing-key");
-
-        return alumnoResponse;
     }
 
     @Override

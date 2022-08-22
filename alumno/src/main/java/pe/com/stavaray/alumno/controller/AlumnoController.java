@@ -35,7 +35,14 @@ public class AlumnoController {
     @PostMapping
     public ResponseEntity<?> registrarAlumno(@Valid @RequestBody Alumno alumno) {
         log.info("Nuevo registro de alumno {}", alumno);
-        return new ResponseEntity<Alumno>(alumnoService.save(alumno), HttpStatus.OK);
+        Alumno newAlumno = alumnoService.save(alumno);
+        String resultado = alumnoService.validarAlumno(newAlumno);
+        log.info("Resultado: {}",resultado);
+        if (resultado.equals("OK")){
+            alumnoService.registrarNotificacion(newAlumno);
+            return new ResponseEntity<Alumno>(alumnoService.save(alumno), HttpStatus.OK);
+        }
+        return new ResponseEntity("Servicio validarAlumno no disponible", HttpStatus.OK);
     }
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> modificarAlumno(@Valid @RequestBody Alumno alumno, @PathVariable Long id) {

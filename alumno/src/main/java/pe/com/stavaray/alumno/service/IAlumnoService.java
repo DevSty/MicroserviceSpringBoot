@@ -11,6 +11,11 @@ public interface IAlumnoService {
     public Alumno save(Alumno alumno);
     public Alumno modifyAlumno(Alumno alumno);
     public boolean deleteById(Long id);
+    void registrarNotificacion(Alumno alumno);
+    String validarAlumno(Alumno alumno);
+
+
+
 
 
 }

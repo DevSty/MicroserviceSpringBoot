@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-config
+  labels:
+    app: server-config
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: server-config
+      labels:
+        app: server-config
+    spec:
+      containers:
+        - name: server-config
+          image: mrsimonty/server-config:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: server-config

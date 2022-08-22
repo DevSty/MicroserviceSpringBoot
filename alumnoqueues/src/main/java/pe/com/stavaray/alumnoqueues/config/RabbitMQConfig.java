@@ -1,4 +1,4 @@
-package pe.com.stavaray.alumno.config;
+package pe.com.stavaray.alumnoqueues.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;

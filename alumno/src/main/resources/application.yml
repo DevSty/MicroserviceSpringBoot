@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: alumno
+  config:
+    import: "optional:serverconfig:"
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8090

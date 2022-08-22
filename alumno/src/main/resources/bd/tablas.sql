@@ -1,0 +1,1 @@
+create table if not exists genero (genero_id integer not null, genero_type varchar(255), primary key (genero_id));

@@ -44,7 +44,73 @@ services:
       - "15672:15672"
     networks:
       - spring
-
+  eureka-server:
+    image: mrsimonty/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+  apigateway:
+    image: mrsimonty/apigateway:latest
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+  cliente:
+    image: mrsimonty/alumno:latest
+    container_name: alumno
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - rabbitmq
+      - eureka-server
+  validarcliente:
+    image: mrsimonty/curso:latest
+    container_name: curso
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - eureka-server
+  notificacion:
+    image: mrsimonty/notificacion:latest
+    container_name: notificacionalumno
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - rabbitmq
+      - eureka-server
 networks:
   postgres:
     driver: bridge

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
@@ -38,5 +39,9 @@ public class Alumno{
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date fechaRegistro;
+    @ManyToOne
+    @JoinColumn(name="genero_id", nullable = false)
+    @NotNull(message = "{NotNull.alumno.genero}")
+    private Genero genero;
 
 }

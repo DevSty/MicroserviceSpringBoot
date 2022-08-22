@@ -1,4 +1,4 @@
-package pe.com.stavaray.alumno.rabbitmq;
+package pe.com.stavaray.alumnoqueues.rabbitmq;
 
 
 import lombok.AllArgsConstructor;
