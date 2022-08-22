@@ -71,7 +71,7 @@ services:
     image: mrsimonty/alumno:latest
     container_name: alumno
     ports:
-      - "8081:8081"
+      - "8091:8091"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -81,13 +81,13 @@ services:
       - zipkin
       - postgres
       - rabbitmq
-      - server-config
+      - configserver
 #      - eureka-server
   validaralumno:
     image: mrsimonty/curso:latest
     container_name: curso
     ports:
-      - "8082:8082"
+      - "8092:8092"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -96,13 +96,13 @@ services:
     depends_on:
       - zipkin
       - postgres
-      - server-config
+      - configserver
 #      - eureka-server
-  notificacion:
+  notificacionalumno:
     image: mrsimonty/notificacion:latest
     container_name: notificacionalumno
     ports:
-      - "8084:8084"
+      - "8094:8094"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -112,11 +112,11 @@ services:
       - zipkin
       - postgres
       - rabbitmq
-      - server-config
+      - configserver
 #      - eureka-server
-  server-config:
-    image: mrsimonty/server-config:latest
-    container_name: config-server
+  configserver:
+    image: mrsimonty/configserver:latest
+    container_name: configserver
     ports:
       - "8090:8090"
     environment:
