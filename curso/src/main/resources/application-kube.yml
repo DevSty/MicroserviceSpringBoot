@@ -2,8 +2,8 @@ spring:
   application:
     name: curso
   config:
-    import: "optional:configserver:http://config-server:8090"
+    import: "optional:configserver:http://configserver:8090"
   cloud:
     config:
       enabled: true
-      uri: http://config-server:8090
+      uri: http://configserver:8090
