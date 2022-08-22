@@ -2,11 +2,11 @@ server:
   port: 8090
 spring:
   application:
-    name: server-config
+    name: config-server
   cloud:
     config:
       server:
         git:
           default-label: master
           uri: https://github.com/DevSty/MicroserviceSpringBoot
-          search-paths: config-data/kube
+          search-paths: config-data/default

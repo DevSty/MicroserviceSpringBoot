@@ -11,8 +11,8 @@
         <module>notificacion</module>
 		<module>alumnofeign</module>
 		<module>alumnoqueues</module>
-        <module>server-config</module>
-    </modules>
+		<module>configserver</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

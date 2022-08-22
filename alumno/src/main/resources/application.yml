@@ -2,7 +2,7 @@ spring:
   application:
     name: alumno
   config:
-    import: "optional:serverconfig:"
+    import: "optional:configserver:"
   cloud:
     config:
       enabled: true
