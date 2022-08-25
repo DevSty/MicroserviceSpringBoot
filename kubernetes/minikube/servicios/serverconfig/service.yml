@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-config
+  name: serverconfig
 spec:
   selector:
-    app: server-config
+    app: serverconfig
   ports:
     - port: 8090
       targetPort: 8090

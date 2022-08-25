@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-config
+  name: serverconfig
   labels:
-    app: server-config
+    app: serverconfig
 spec:
   replicas: 1
   template:
     metadata:
-      name: server-config
+      name: serverconfig
       labels:
-        app: server-config
+        app: serverconfig
     spec:
       containers:
-        - name: server-config
-          image: mrsimonty/server-config:latest
+        - name: serverconfig
+          image: mrsimonty/configserver:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8090
@@ -24,4 +24,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: server-config
+      app: serverconfig

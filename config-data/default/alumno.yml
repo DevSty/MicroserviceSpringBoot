@@ -48,7 +48,7 @@ resilience4j:
   circuitbreaker:
     circuit-breaker-aspect-order: 1
     instances:
-      validarclienteCB:
+      validarAlumnoCB:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
         failureRateThreshold: 50
@@ -61,7 +61,7 @@ resilience4j:
   retry:
     retry-aspect-order: 2
     instances:
-      validarclienteRetry:
+      validarAlumnoRetry:
         registerHealthIndicator: true
         maxRetryAttempts: 5
         waitDuration: 5s

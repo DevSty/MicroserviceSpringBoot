@@ -43,8 +43,8 @@ public class AlumnoServiceImpl implements IAlumnoService {
     @Override
     public Alumno save(Alumno alumno) {
 
-        Alumno alumnoResponse = alumnoDao.save(alumno);
-        return alumnoResponse;
+        return  alumnoDao.save(alumno);
+
     }
     @CircuitBreaker(name = "validarAlumnoCB", fallbackMethod = "fallValidarAlumnoCB")
     @Retry(name = "validarAlumnoRetry")

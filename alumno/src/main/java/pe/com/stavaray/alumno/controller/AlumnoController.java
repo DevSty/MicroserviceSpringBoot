@@ -40,7 +40,8 @@ public class AlumnoController {
         log.info("Resultado: {}",resultado);
         if (resultado.equals("OK")){
             alumnoService.registrarNotificacion(newAlumno);
-            return new ResponseEntity<Alumno>(alumnoService.save(alumno), HttpStatus.OK);
+            return new ResponseEntity<AlumnoRequest>(new AlumnoRequest(newAlumno.getId(),alumno.getNombre()
+            , alumno.getApellidoPaterno(), alumno.getApellidoMaterno(), alumno.getEmail(), alumno.getFechaRegistro()), HttpStatus.OK);
         }
         return new ResponseEntity("Servicio validarAlumno no disponible", HttpStatus.OK);
     }
