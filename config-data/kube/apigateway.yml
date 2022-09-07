@@ -13,7 +13,7 @@ spring:
             - Path=/api/alumno/**
           filters:
             - AutorizacionFilter
-        - id: curso
+        - id: alumno
           uri: lb://CURSO
           predicates:
             - Path=/api/curso/**
