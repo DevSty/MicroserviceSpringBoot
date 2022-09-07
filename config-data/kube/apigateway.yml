@@ -1,0 +1,35 @@
+server:
+  port: 8093
+
+spring:
+  zipkin:
+    base-url: http://zipkin:9411
+  cloud:
+    gateway:
+      routes:
+        - id: alumno
+          uri: lb://ALUMNO
+          predicates:
+            - Path=/api/alumno/**
+          filters:
+            - AutorizacionFilter
+        - id: curso
+          uri: lb://CURSO
+          predicates:
+            - Path=/api/curso/**
+          filters:
+            - AutorizacionFilter
+        - id: autentication
+          uri: lb://autentication
+          predicates:
+            - Path=/api/autentication/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+#    enabled: false
+  instance:
+    prefer-ip-address: true

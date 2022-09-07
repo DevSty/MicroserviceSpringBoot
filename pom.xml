@@ -12,7 +12,8 @@
 		<module>alumnofeign</module>
 		<module>alumnoqueues</module>
 		<module>configserver</module>
-	</modules>
+        <module>autentication</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

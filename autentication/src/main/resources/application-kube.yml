@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: autentication
+  config:
+    import: "optional:configserver:http://configserver:8090"
+  cloud:
+    config:
+      enabled: true
+      uri: http://configserver:8090

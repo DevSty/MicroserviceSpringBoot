@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: serverconfig
+  name: configserver
   labels:
-    app: serverconfig
+    app: configserver
 spec:
   replicas: 1
   template:
     metadata:
-      name: serverconfig
+      name: configserver
       labels:
-        app: serverconfig
+        app: configserver
     spec:
       containers:
-        - name: serverconfig
+        - name: configserver
           image: mrsimonty/configserver:latest
           imagePullPolicy: Always
           ports:
@@ -24,4 +24,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: serverconfig
+      app: configserver

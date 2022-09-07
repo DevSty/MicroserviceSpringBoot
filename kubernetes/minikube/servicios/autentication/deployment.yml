@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auntentication
+  labels:
+    app: auntentication
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: auntentication
+      labels:
+        app: auntentication
+    spec:
+      containers:
+        - name: auntentication
+          image: mrsimonty/auntentication:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8095
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: auntentication
