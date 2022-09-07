@@ -44,29 +44,31 @@ services:
       - "15672:15672"
     networks:
       - spring
-#  eureka-server:
-#    image: mrsimonty/eureka-server:latest
-#    container_name: eureka-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#  apigateway:
-#    image: mrsimonty/apigateway:latest
-#    container_name: apigateway
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#      - eureka-server
+  eurekaserver:
+    image: mrsimonty/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - configserver
+  api-gateway:
+    image: mrsimonty/apigateway:latest
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eurekaserver
+      - configserver
   alumno:
     image: mrsimonty/alumno:latest
     container_name: alumno
@@ -82,10 +84,11 @@ services:
       - postgres
       - rabbitmq
       - configserver
-#      - eureka-server
+      - eurekaserver
+      - api-gateway
   validaralumno:
     image: mrsimonty/curso:latest
-    container_name: curso
+    container_name: validarcurso
     ports:
       - "8092:8092"
     environment:
@@ -97,7 +100,8 @@ services:
       - zipkin
       - postgres
       - configserver
-#      - eureka-server
+      - eurekaserver
+      - api-gateway
   notificacionalumno:
     image: mrsimonty/notificacion:latest
     container_name: notificacionalumno
@@ -113,7 +117,24 @@ services:
       - postgres
       - rabbitmq
       - configserver
-#      - eureka-server
+      - eurekaserver
+  autentication:
+    image: mrsimonty/autentication:latest
+    container_name: autentication
+    ports:
+      - "8095:8095"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - rabbitmq
+      - configserver
+      - eurekaserver
+      - api-gateway
   configserver:
     image: mrsimonty/configserver:latest
     container_name: configserver
