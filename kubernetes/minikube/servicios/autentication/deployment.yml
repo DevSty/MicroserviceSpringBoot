@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auntentication
+  name: autentication
   labels:
-    app: auntentication
+    app: autentication
 spec:
   replicas: 1
   template:
     metadata:
-      name: auntentication
+      name: autentication
       labels:
-        app: auntentication
+        app: autentication
     spec:
       containers:
-        - name: auntentication
-          image: mrsimonty/auntentication:latest
+        - name: autentication
+          image: mrsimonty/autentication:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8095
@@ -24,4 +24,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: auntentication
+      app: autentication

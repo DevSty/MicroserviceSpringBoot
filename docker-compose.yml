@@ -86,9 +86,9 @@ services:
       - configserver
       - eurekaserver
       - api-gateway
-  validaralumno:
+  curso:
     image: mrsimonty/curso:latest
-    container_name: validarcurso
+    container_name: curso
     ports:
       - "8092:8092"
     environment:

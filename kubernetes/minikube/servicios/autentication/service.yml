@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: auntentication
+  name: autentication
 spec:
   selector:
-    app: auntentication
+    app: autentication
   ports:
     - port: 8095
       targetPort: 8095
